@@ -4,7 +4,6 @@ import "components/InterviewerList.scss";
 import InterviewerList from "components/InterviewerList";
 
 const Form = (props) => {
-// console.log("My data:", props.interviewers[2].id);
 const interviewers = props.interviewers;
 
 const [student, setStudent] = useState(props.student || "");

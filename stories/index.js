@@ -125,28 +125,6 @@ const interviewers = [
   { id: 4, name: "Cohana Roy", avatar: "https://i.imgur.com/FK8V841.jpg" },
   { id: 5, name: "Sven Jones", avatar: "https://i.imgur.com/twYrpay.jpg" }
 ];
-// $$$$$$$$Old one
-// storiesOf("InterviewerList", module)
-//   .addParameters({
-//     backgrounds: [{ name: "dark", value: "#222f3e", default: true }]
-//   })
-//   .add("Initial", () => (
-//     <InterviewerList
-//       interviewers={interviewers}
-//     />
-//   ))
-//   .add("Selected", () => (
-//     <InterviewerList
-//       interviewers={interviewers}
-//       interviewer={3}
-//     />
-//   ))
-//   .add("Clickable", () => (
-//     <InterviewerList
-//       interviewers={interviewers}
-//       setInterviewer={action("setInterviewer")}
-//     />
-//   ));
 
 // New One 
 storiesOf("InterviewerList", module)
