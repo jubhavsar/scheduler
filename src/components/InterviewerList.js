@@ -5,24 +5,16 @@ import InterviewerListItem from 'components/InterviewerListItem';
 const InterviewerList = (props) => {
 
   const interviewers = props.interviewers.map((interviewer) => {
-    // const onChange = (id) => props.setInterviewer(id);
-    // const value = props.interviewer;
+    
+    console.log("Some",interviewer.id === props.value,props)
     return (
       // ***** New one
-      //     <InterviewerListItem 
-      // key={interviewer.id}
-      // name={interviewer.name}
-      // avatar={interviewer.avatar}
-      // selected={interviewer.id === value}
-      // setInterviewer={() => onChange(interviewer.id)}    
-      // />
-      
-      <InterviewerListItem
-        key={interviewer.id}
-        name={interviewer.name}
-        avatar={interviewer.avatar}
-        selected={interviewer.id === props.interviewer}
-        setInterviewer={() => props.setInterviewer(interviewer.id)}
+          <InterviewerListItem 
+      key={interviewer.id}
+      name={interviewer.name}
+      avatar={interviewer.avatar}
+      selected={interviewer.id === props.value}
+      setInterviewer={() => props.onChange(interviewer.id)}    
       />
     );
   });

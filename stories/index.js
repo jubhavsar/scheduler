@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from 'react';
 
 import { storiesOf } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
@@ -15,23 +15,19 @@ import Show from "components/Appointment/Show";
 import Confirm from "components/Appointment/Confirm";
 import Status from "components/Appointment/Status";
 import Error from "components/Appointment/Error";
+import Form from "components/Appointment/Form";
 
 // Stories for DayListItem component
-
-//Initiates Storybook and registers our DayListItem component
 storiesOf("DayListItem", module) 
 
-// Provides the default background color for our component
   .addParameters({
     backgrounds: [{ name: "dark", value: "#222f3e", default: true }]
   }) 
 
-  // To define our stories, we call add() once for each of our test states to generate a story
   .add("Unselected", () => <DayListItem name="Monday" spots={5} />) 
   .add("Selected", () => <DayListItem name="Monday" spots={5} selected />) 
   .add("Full", () => <DayListItem name="Monday" spots={0} />)
   .add("Clickable", () => (
-    // action() allows us to create a callback that appears in the actions panel when clicked
     <DayListItem name="Tuesday" setDay={action("setDay")} spots={5} /> 
   ));
 
@@ -85,20 +81,7 @@ storiesOf("Button", module)
   .add("Wednesday", () => (
     <DayList days={days} value={"Wednesday"} onChange={action("setDay")} />
   ));
-  //@@@@@ Old One 
-  // storiesOf("DayList", module)
-  //   .addParameters({
-  //     backgrounds: [{ name: "dark", value: "#222f3e", default: true }],
-  //   })
-  //   .add("Monday", () => (
-  //     <DayList days={days} day={"Monday"} setDay={action("setDay")} />
-  //   ))
-  //   .add("Tuesday", () => (
-  //     <DayList days={days} day={"Tuesday"} setDay={action("setDay")} />
-  //   ))
-  //   .add("Wednesday", () => (
-  //       <DayList days={days} day={"Wednesday"} setDay={action("setDay")} />
-  //   ));
+  
 
 // Stories for InterviewerListItem component
 const interviewer = {
@@ -142,8 +125,30 @@ const interviewers = [
   { id: 4, name: "Cohana Roy", avatar: "https://i.imgur.com/FK8V841.jpg" },
   { id: 5, name: "Sven Jones", avatar: "https://i.imgur.com/twYrpay.jpg" }
 ];
-
 // $$$$$$$$Old one
+// storiesOf("InterviewerList", module)
+//   .addParameters({
+//     backgrounds: [{ name: "dark", value: "#222f3e", default: true }]
+//   })
+//   .add("Initial", () => (
+//     <InterviewerList
+//       interviewers={interviewers}
+//     />
+//   ))
+//   .add("Selected", () => (
+//     <InterviewerList
+//       interviewers={interviewers}
+//       interviewer={3}
+//     />
+//   ))
+//   .add("Clickable", () => (
+//     <InterviewerList
+//       interviewers={interviewers}
+//       setInterviewer={action("setInterviewer")}
+//     />
+//   ));
+
+// New One 
 storiesOf("InterviewerList", module)
   .addParameters({
     backgrounds: [{ name: "dark", value: "#222f3e", default: true }]
@@ -156,41 +161,17 @@ storiesOf("InterviewerList", module)
   .add("Selected", () => (
     <InterviewerList
       interviewers={interviewers}
-      interviewer={3}
+      value={3}
     />
   ))
   .add("Clickable", () => (
     <InterviewerList
       interviewers={interviewers}
-      setInterviewer={action("setInterviewer")}
+      onChange={action("setInterviewer")}
     />
   ));
-
-  // $$$$$$ New one 
-
-  // storiesOf("InterviewerList", module)
-  // .addParameters({
-  //   backgrounds: [{ name: "dark", value: "#222f3e", default: true }]
-  // })
-  // .add("Initial", () => (
-  //   <InterviewerList
-  //     interviewers={interviewers}
-  //   />
-  // ))
-  // .add("Selected", () => (
-  //   <InterviewerList
-  //     interviewers={interviewers}
-  //     value={3}
-  //   />
-  // ))
-  // .add("Clickable", () => (
-  //   <InterviewerList
-  //     interviewers={interviewers}
-  //     onChange={action("setInterviewer")}
-  //   />
-  // ));
-
   // Stories for Appoinment componenet
+  
   storiesOf("Appointment", module)
   .addParameters({
     backgrounds: [{ name: "white", value: "#fff", default: true }]
@@ -210,13 +191,12 @@ storiesOf("InterviewerList", module)
   .add("Show", () => (
     <Show onEdit={action("onEdit")} 
           onDelete={action("onDelete")} 
-          student={"Lydia Miller-Jones"} interviewer={"Sylvia Palmer"} 
+          student={"Lydia Miller-Jones"} interviewer={interviewers[1].name} 
           />
   ))
   .add("Confirm", () => (
       <Confirm Cancel={action("Cancel")}
-    Confirm={action("Confirm")}
-    />
+    Confirm={action("Confirm")} />
   ))
   .add("Status", () => (
     <Status  message="Deleting"/>
@@ -226,3 +206,30 @@ storiesOf("InterviewerList", module)
             onClose={action("onClose")}
     />
   ))
+  .add("Create", () => (
+    <Form interviewers={interviewers} onSave={action("onSave")} 
+    onCancel={action("onCancel")}
+    />
+  ))
+  .add("Edit", () => (
+    <Form student="Juhi" interviewer={3} interviewers={interviewers}
+     onSave={action("onSave")} onCancel={action("onCancel")}
+    />
+  ))
+  .add("Appointment Empty", () => (
+    <Fragment>
+      <Appointment id={1} time="4pm" />
+      <Appointment time="5pm" />
+    </Fragment>
+  ))
+  .add("Appointment Booked", () => (
+    <Fragment>
+      <Appointment
+        id={1}
+        time="4pm"
+        interview={{ student: "Lydia Miller-Jones", interviewer }}
+      />
+      <Appointment time="5pm" />
+    </Fragment>
+  ))
+  
