@@ -5,7 +5,7 @@ import Empty from './Empty';
 import Show from './Show';
 
 const Appointment = (props) => {
-  console.log("i!!!!!", props)
+  // console.log("i!!!!!", props)
   return (
   <article className="appointment">
   <Header time={props.time}/>

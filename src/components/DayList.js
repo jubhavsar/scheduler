@@ -8,7 +8,7 @@ const DayList = (props) => {
   const parsedDayListItems = arrayOfDays.map(dayListItem => 
     { return (
       
-    <ul> 
+    <ul key={dayListItem.id} > 
     <DayListItem
         key={dayListItem.id}  
         name={dayListItem.name} 
