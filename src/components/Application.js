@@ -3,7 +3,7 @@ import DayList from "components/DayList";
 import "components/Application.scss";
 import Appointment from "components/Appointment";
 import axios from "axios";
-import { getAppointmentsForDay, getInterview }  from "helpers/selectors";
+import { getAppointmentsForDay, getInterview, getInterviewersForDay }  from "helpers/selectors";
 
 
 export default function Application(props) {
@@ -19,28 +19,22 @@ export default function Application(props) {
 
   // invoking helper function that returns array of appoinments
   let dailyAppointments = getAppointmentsForDay(state, state.day);
-  
+  let dailyiInterviewers = getInterviewersForDay(state, state.day)
   //Loopover each appoinment and display each appoinment on specific day
   const schedule = dailyAppointments.map((appointment) => {
   const interview = getInterview(state, appointment.interview);
-    return (
+    
+  return (
      <Appointment 
-     key={appointment.id} 
-     interview={interview}
-     {...appointment} />
+        key={appointment.id} 
+        interview={interview}
+        interviewers={dailyiInterviewers}
+        {...appointment} />
     );
   });
 
   // Implement setDay fun which set specific day for appoinments
   const setDay = day => setState({ ...state, day });
-
-  // useEffect(() => {
-  //   axios.get(`http://localhost:8001/api/days`).then(response => {
-  //     const data = response.data;
-  //     // setDays([...data])
-  //      setDay(data[0].name)
-  //   });
-  // }, []);
 
 // Fetching data using axios get request and useEffect with promises
   useEffect(() => {
@@ -53,8 +47,6 @@ export default function Application(props) {
                                   appointments: all[1].data, 
                                   interviewers:all[2].data
                         }));
-      // console.log("Data:",all);
-
 
     }).catch((err) => {
       console.log(err.message);

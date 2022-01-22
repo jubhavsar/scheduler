@@ -39,5 +39,23 @@ return interviewObject;
     
 }
 
-export { getAppointmentsForDay, getInterview }
+function getInterviewersForDay(state, day) {
+   
+  let dayObject = state.days.find(dayElem => dayElem.name === day);
+
+  
+  if(!dayObject){
+    return [];
+  }
+
+  let interviewers = dayObject.interviewers.map((interviewer) => {
+    let interviewerList = state.interviewers[interviewer];
+    return interviewerList;
+  })
+  console.log("Int:::", interviewers)
+
+  return interviewers;
+
+}
+export { getAppointmentsForDay, getInterview, getInterviewersForDay }
 
