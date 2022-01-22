@@ -3,7 +3,7 @@ import DayList from "components/DayList";
 import "components/Application.scss";
 import Appointment from "components/Appointment";
 import axios from "axios";
-import getAppointmentsForDay from "helpers/selectors";
+import { getAppointmentsForDay, getInterview }  from "helpers/selectors";
 
 
 export default function Application(props) {
@@ -12,17 +12,22 @@ export default function Application(props) {
   const [state, setState] = useState({
     day: "Monday",
     days: [],
-    appointments: {}
+    appointments: {},
+    interviewers: {}
       
   });
 
   // invoking helper function that returns array of appoinments
   let dailyAppointments = getAppointmentsForDay(state, state.day);
-
+  
   //Loopover each appoinment and display each appoinment on specific day
-  const parsedAppointments = dailyAppointments.map((appointment) => {
+  const schedule = dailyAppointments.map((appointment) => {
+  const interview = getInterview(state, appointment.interview);
     return (
-     <Appointment key={appointment.id} {...appointment} />
+     <Appointment 
+     key={appointment.id} 
+     interview={interview}
+     {...appointment} />
     );
   });
 
@@ -36,14 +41,21 @@ export default function Application(props) {
   //      setDay(data[0].name)
   //   });
   // }, []);
-  
+
 // Fetching data using axios get request and useEffect with promises
   useEffect(() => {
     Promise.all([
       axios.get('http://localhost:8001/api/days'),
-      axios.get('http://localhost:8001/api/appointments')
+      axios.get('http://localhost:8001/api/appointments'),
+      axios.get('http://localhost:8001/api/interviewers')
     ]).then((all) => {
-      setState(prev => ({...prev, days: all[0].data, appointments: all[1].data}));
+      setState(prev => ({...prev, days: all[0].data, 
+                                  appointments: all[1].data, 
+                                  interviewers:all[2].data
+                        }));
+      // console.log("Data:",all);
+
+
     }).catch((err) => {
       console.log(err.message);
     })
@@ -70,7 +82,7 @@ export default function Application(props) {
         />
       </section>
       <section className="schedule">
-        { parsedAppointments }
+        { schedule }
       </section>
     </main>
   );
