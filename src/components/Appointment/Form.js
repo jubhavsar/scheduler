@@ -19,6 +19,7 @@ const cancel = () => {
 }
 const handleSubmit = () =>{
   props.onSave(student,interviewer);
+  
   reset();
 }
 
@@ -46,7 +47,8 @@ return (
     <section className="appointment__card-right">
       <section className="appointment__actions">
       <Button danger onClick={cancel}>Cancel</Button>
-      <Button confirm onClick={(e) => handleSubmit(e)}>Save</Button>
+      {/* <Button confirm onClick={() => props.onSave(student, interviewer)}></Button> */}
+      <Button confirm onClick={(e) => handleSubmit()}>Save</Button>
       </section>
     </section>
   </main>

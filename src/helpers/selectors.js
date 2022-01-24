@@ -52,7 +52,7 @@ function getInterviewersForDay(state, day) {
     let interviewerList = state.interviewers[interviewer];
     return interviewerList;
   })
-  console.log("Int:::", interviewers)
+  // console.log("Int:::", interviewers)
 
   return interviewers;
 
