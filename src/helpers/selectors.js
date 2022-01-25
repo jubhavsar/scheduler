@@ -57,5 +57,6 @@ function getInterviewersForDay(state, day) {
   return interviewers;
 
 }
+
 export { getAppointmentsForDay, getInterview, getInterviewersForDay }
 
