@@ -15,16 +15,6 @@ export default function Application(props) {
   
   // define state
   const [state, setState] = useState({
-      // day: "",
-      // days: [],
-      // appointments: {
-      //   "1": {
-      //     id: 1,
-      //     time: "12pm",
-      //     interview: null
-      //   }
-      // },
-      // interviewers: {}
     day: "Monday",
     days: [],
     appointments: {},
@@ -32,10 +22,10 @@ export default function Application(props) {
       
   });
 
+  // Bool interview
   function bookInterview(id, interview) {
     // console.log("!!!!!!$$$$$$", id, interview);
-
-    const appointment = {
+     const appointment = {
       ...state.appointments[id],
       interview: { ...interview }
     };
@@ -50,43 +40,61 @@ export default function Application(props) {
       appointments
     });
 
-    return (
-      axios.put(`/api/appointments/${id}`, appointment)
-    .then((res) =>{ setState((prev) =>({ ...prev, appointments}))
-        
+    return  axios.put(`/api/appointments/${id}`, appointment)
+    .then((res) =>{ setState((prev) =>({ ...prev, appointments}))   
     })
     .catch(err =>{
       console.log(err.message);
-    })
-    )
+    });
   }
 
-  // console.log(state);
+  // Cancel interview
+  function cancelInterview(id) {
+    const appointment = {
+      ...state.appointments[id],
+      interview: null
+    };
+
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+
+    setState({
+      ...state,
+      appointments
+    });
+
+    return axios.delete(`/api/appointments/${id}`)
+    .then(() =>{ 
+      setState((prev) =>({ ...prev, appointments}))
+    })
+    .catch(err =>{
+      console.log(err.message);
+    });
+  }
+
 
   // invoking helper function that returns array of appoinments
   let dailyAppointments = getAppointmentsForDay(state, state.day);
   let dailyInterviewers = getInterviewersForDay(state, state.day);
-  // console.log("interviewers",dailyInterviewers);
+  
   
   //Loopover each appoinment and display each appoinment on specific day
   const schedule = dailyAppointments.map((appointment) => {
   const interview = getInterview(state, appointment.interview);
-    console.log("appoint",appointment);
+  
   return (
-    // <Appointment
-    //     key={appointment.id}
-    //     id={appointment.id}
-    //     time={appointment.time}
-    //     interview={interview}
-    //     interviewers={dailyInterviewers}
-    //     bookInterview={bookInterview}
-    //   />
-     <Appointment 
-        key={appointment.id} 
+    <Appointment
+        key={appointment.id}
+        id={appointment.id}
+        time={appointment.time}
         interview={interview}
         interviewers={dailyInterviewers}
         bookInterview={bookInterview}
-      {...appointment} />
+        cancelInterview={cancelInterview}
+      />
+    
     );
     
   });
