@@ -6,14 +6,14 @@ export default function useVisualMode(initial) {
 
 
   function transition(newMode, replace = false) {
-    if(replace){
+    if (replace){
       setHistory((prev) => [...prev.slice(0, prev.length - 1), newMode]);//backword
-    }else {
+    } else {
       setHistory((prev) => [...prev, newMode]);
     }
   } 
   function back() { 
-    if (history.length > 1) {
+   if (history.length > 1) {
     setHistory((prev) => [...prev.slice(0, prev.length - 1)])
    } else {
      return;
