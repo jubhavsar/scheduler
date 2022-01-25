@@ -1,5 +1,9 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { action } from '@storybook/addon-actions/dist/preview';
+
+const DELETE = "DELETE";
+const CREATE = "CREATE";
 
 export default function useApplicationData() {
 
@@ -16,7 +20,7 @@ export default function useApplicationData() {
   const setDay = day => setState({ ...state, day });
 
   // Bool interview
-  function bookInterview(id, interview) {
+  function bookInterview(id, interview, action) {
     const appointment = {
      ...state.appointments[id],
      interview: { ...interview }
@@ -28,7 +32,10 @@ export default function useApplicationData() {
    };
 
    return  axios.put(`/api/appointments/${id}`, appointment)
-   .then((res) =>{ setState((prev) =>({ ...prev, appointments}))   
+   
+   .then((res) =>{ 
+    const newDays = updateSpots(state, action);
+    setState((prev) =>({ ...prev, appointments, days: newDays}))   
    })
    .catch(err =>{
      console.log(err.message);
@@ -48,12 +55,33 @@ export default function useApplicationData() {
      [id]: appointment
    };
 
+
    return axios.delete(`/api/appointments/${id}`)
    .then(() =>{ 
-     setState((prev) =>({ ...prev, appointments}))
+     const newDays = updateSpots(state, DELETE);
+     setState((prev) =>({ ...prev, appointments, days:newDays }))
    })
  }
 
+ //  //Update spots 
+  
+
+ const updateSpots = function (state, action) {
+  let newDays = [...state.days];
+  //console.log("Newday", newDays)
+  
+  newDays.forEach((day) =>{
+    if(day.name === state.day){
+      if(action === CREATE){
+        day.spots -= 1;
+      }else if(action === DELETE){
+        day.spots += 1;
+      }
+    }
+  })
+  
+  return newDays;
+};
  // Fetching data using axios get request and useEffect with promises
  useEffect(() => {
   Promise.all([
@@ -73,5 +101,5 @@ export default function useApplicationData() {
   })
 }, []);
 
- return { state, setDay, bookInterview, cancelInterview }
+ return { state, setDay, bookInterview, cancelInterview, updateSpots}
 }

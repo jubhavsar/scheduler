@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import "components/Appointment/styles.scss";
 import Header from './Header';
 import Empty from './Empty';
@@ -26,13 +26,20 @@ const Appointment = (props) => {
     props.interview ? SHOW : EMPTY
   );
 
+  const [action, setAction] = useState(CREATE);
+
   function save(name, interviewer) {
+    if(!name || !interviewer){
+      alert("You have to enter student name and interviewer");
+      return;
+    }
     const interview = {
       student: name,
       interviewer
     };
+
     transition(SAVING);
-     props.bookInterview(props.id, interview)
+     props.bookInterview(props.id, interview, action)
      .then(() =>{
       transition(SHOW);
      })
@@ -40,7 +47,15 @@ const Appointment = (props) => {
       transition(ERROR_SAVE, true)
      });
   }
-  
+
+  function edit() {
+    transition(EDIT);
+    setAction(EDIT);
+  }
+  function create() {
+    transition(CREATE);
+    setAction(CREATE);
+  }
 
   function destroy(){
     transition(DELETING, true);
@@ -62,11 +77,11 @@ const Appointment = (props) => {
       interviewer={props.interview.interviewer.name} 
       // bookInterview={props.bookInterview}
       onDelete={() => transition(CONFIRM)}  
-      onEdit={() => transition(EDIT)}
+      onEdit={edit}
       />
       )}
     {mode === CREATE && (
-      <Form interviewers={Object.values(props.interviewers)} onCancel={() => back(EMPTY)} onSave={save}/>
+      <Form interviewers={Object.values(props.interviewers)} onCancel={back} onSave={save}/>
     )}
     {mode === EDIT && (
       <Form interviewers={Object.values(props.interviewers)} 
@@ -74,7 +89,7 @@ const Appointment = (props) => {
             interviewer={props.interview.interviewer.id}
             onCancel={back} onSave={save} />
     )}
-    {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
+    {mode === EMPTY && <Empty onAdd={create} />}
     {mode === SAVING && <Status message="Saving" />}
     {mode === DELETING && <Status message="Deleting" />}
     {mode === CONFIRM && <Confirm message="Are you sure you want to delete?" onCancel={back} onConfirm={destroy}
