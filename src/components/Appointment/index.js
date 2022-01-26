@@ -8,7 +8,6 @@ import useVisualMode from 'hooks/useVisualMode';
 import Status from './Status';
 import Confirm from './Confirm';
 import Error from './Error';
-// import { getInterview } from 'helpers/selectors';
 
 const EMPTY = "EMPTY";
 const SHOW = "SHOW";
@@ -30,7 +29,7 @@ const Appointment = (props) => {
 
   function save(name, interviewer) {
     if(!name || !interviewer){
-      alert("You have to enter student name and interviewer");
+      alert("Please enter student name and interviewer");
       return;
     }
     const interview = {

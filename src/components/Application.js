@@ -32,7 +32,7 @@ export default function Application(props) {
       );
     }
   );
-  console.log("app", state.day, state.days)
+  // console.log("app", state.day, state.days)
 
   return (
     <main className="layout">
