@@ -4,19 +4,22 @@ import "components/InterviewerList.scss";
 import InterviewerList from "components/InterviewerList";
 
 const Form = (props) => {
-const { studentName, interviewerId, interviewers, onCancel, onSave } = props;
+// const { studentName, interviewer, interviewers, onCancel, onSave } = props;
 
-const [student, setStudent] = useState(studentName || "");
-const [interviewer, setInterviewer] = useState(interviewerId || null);
+const [student, setStudent] = useState(props.studentName || "");
+const [interviewer, setInterviewer] = useState(props.interviewer || null);
 const [error, setError] = useState("");
 
+// console.log("@@@@",{ studentName, interviewerId, interviewers, onCancel, onSave, interviewer})
 const reset = () => {
   setStudent("");
   setInterviewer(null);
 }
+
 const cancel = () => {
+  console.log("hello");
   reset();
-  onCancel();
+  props.onCancel();
 }
 // const handleSubmit = () =>{
 //   onSave(student, interviewer);
@@ -29,8 +32,8 @@ function validate() {
     return setError("Student name cannot be blank");
     
   }
-  setError("");
-  onSave(student, interviewer);
+   setError("");
+  props.onSave(student, interviewer);
 }
 return (
     <main className="appointment__card appointment__card--create">
@@ -38,7 +41,7 @@ return (
         <form autoComplete="off" onSubmit={event => event.preventDefault()}>
           <input
              className="appointment__create-input text--semi-bold"
-             name={studentName}
+             name="name"
              type="text"
              placeholder="Enter Student Name"
              value={student}
@@ -46,10 +49,10 @@ return (
              data-testid="student-name-input"
 
           />
-          <section className="appointment__validation">{error}</section>
         </form>
+        <section className="appointment__validation">{error}</section>
         <InterviewerList 
-        interviewers={interviewers}
+        interviewers={props.interviewers}
         value={interviewer}
         onChange={setInterviewer}
 
