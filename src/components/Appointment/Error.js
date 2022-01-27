@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 const Error = (props) => {
   return (
@@ -12,10 +12,9 @@ const Error = (props) => {
         src="images/close.png"
         alt="Close"
         onClick={props.onClose}
-        
       />
     </main>
-  )
+  );
 };
 
 export default Error;

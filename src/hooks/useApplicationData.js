@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { action } from '@storybook/addon-actions/dist/preview';
 
 const DELETE = "DELETE";
 const CREATE = "CREATE";
@@ -64,12 +63,9 @@ export default function useApplicationData() {
  }
 
  //  //Update spots 
-  
-
  const updateSpots = function (state, action) {
   let newDays = [...state.days];
-  //console.log("Newday", newDays)
-  
+
   newDays.forEach((day) =>{
     if(day.name === state.day){
       if(action === CREATE){
@@ -79,9 +75,9 @@ export default function useApplicationData() {
       }
     }
   })
-  
   return newDays;
 };
+
  // Fetching data using axios get request and useEffect with promises
  useEffect(() => {
   Promise.all([
