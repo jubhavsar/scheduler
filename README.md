@@ -36,6 +36,6 @@ npm test
 ```sh
 npm run storybook
 ```
-!["book-appointment Page"](https://github.com/jubhavsar/scheduler/blob/master/docs/book-appointment.png?raw=true);
-!["Main-interviewer-scheduler Page"](https://github.com/jubhavsar/scheduler/blob/master/docs/interview-scheduler.png?raw=true);
-!["delete-form page"](https://github.com/jubhavsar/scheduler/blob/master/docs/delete-form.png?raw=true);
+!["book-appointment Page"](https://github.com/jubhavsar/scheduler/blob/master/docs/book-appointment.png?raw=true)
+!["Main-interviewer-scheduler Page"](https://github.com/jubhavsar/scheduler/blob/master/docs/interview-scheduler.png?raw=true)
+!["delete-form page"](https://github.com/jubhavsar/scheduler/blob/master/docs/delete-form.png?raw=true)
