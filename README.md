@@ -10,7 +10,7 @@ React
 Webpack, Babel
 Axios, WebSockets
 Axios
-Storybook, Webpack Dev Server, Jest, Testing Library
+Storybook, Webpack Dev Server, Jest, Testing Library, E2E Testing Cypress
 The Scheduler client application created using Create React App. Express is the basis for the Scheduler API server application.
 
 Both servers run concurrently; requests are proxied from the Webpack development server to the API server.
@@ -36,3 +36,6 @@ npm test
 ```sh
 npm run storybook
 ```
+!["book-appointment Page"](https://github.com/jubhavsar/scheduler/blob/master/docs/book-appointment.png?raw=true);
+!["Main-interviewer-scheduler Page"](https://github.com/jubhavsar/scheduler/blob/master/docs/interview-scheduler.png?raw=true);
+!["delete-form page"](https://github.com/jubhavsar/scheduler/blob/master/docs/delete-form.png?raw=true);
